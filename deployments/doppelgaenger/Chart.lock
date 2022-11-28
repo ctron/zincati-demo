@@ -1,0 +1,9 @@
+dependencies:
+- name: drogue-cloud-common
+  repository: https://drogue-iot.github.io/drogue-cloud-helm-charts/
+  version: 0.7.0
+- name: drogue-cloud-twin
+  repository: https://drogue-iot.github.io/drogue-cloud-helm-charts/
+  version: 0.7.0
+digest: sha256:d6a7d3f58416a72a0aa895d84f6318f74b057626549573c4cd96321d20054b64
+generated: "2022-11-28T11:28:50.388067433+01:00"

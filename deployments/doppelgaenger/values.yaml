@@ -1,0 +1,93 @@
+global:
+  cluster: openshift
+  domain: -eclipsecon-2022.apps.sandbox.drogue.world
+
+  partOf: drogue-doppelgaenger
+
+  drogueCloud:
+    jaeger:
+      enabled: true
+
+    useServiceCA: true
+
+    keycloak:
+      # enable keycloak deployment
+      enabled: true
+      # enable secure deployment
+      insecure: false
+      postInstall:
+        image: quay.io/keycloak/keycloak:20.0.1
+
+metrics:
+  scrapeInterval: 5s
+
+drogueCloudTwin:
+
+  defaults:
+
+    images:
+      repository: quay.io/ctrontesting
+      pullPolicy: Always
+      tag: latest
+
+    logging:
+      debug: false
+
+  api:
+    ingress: {}
+
+  services:
+    sso:
+      ingress:
+        annotations:
+          route.openshift.io/termination: reencrypt
+
+    injector:
+      disabled: false
+      extraEnvironment:
+        - name: INJECTOR__SOURCE__MQTT__HOST
+          value: mqtt-integration.sandbox.drogue.cloud
+        - name: INJECTOR__SOURCE__MQTT__PORT
+          value: "443"
+        - name: INJECTOR__SOURCE__MQTT__TOPIC
+          value: "$share/mqtt-injector/app/eclipsecon-hackathon"
+        - name: INJECTOR__METADATA_MAPPER__TYPE
+          value: raw
+        - name: INJECTOR__METADATA_MAPPER__OVERRIDE_APPLICATION
+          value: default
+        - name: INJECTOR__PAYLOAD_MAPPER__TYPE
+          value: simpleState
+
+    debugger:
+      disabled: false
+
+  configuration:
+    commands:
+      host: mqtt-integration.sandbox.drogue.cloud
+      port: 443
+      clientId: command-sink
+      # username:
+      # password:
+      disableTls: false
+      mapToApplication: eclipsecon-hackathon
+
+  kafka:
+    kafka:
+      replicas: 1
+      resources:
+        limits:
+          cpu: 1
+          memory: 1Gi
+        requests:
+          cpu: 250m
+          memory: 1Gi
+
+  keycloak:
+    adminPassword: # see values.secret.yaml
+
+    postInstall:
+      user:
+        password: # see values.secret.yaml
+
+  postgres:
+    password: # see values.secret.yaml

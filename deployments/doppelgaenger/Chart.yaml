@@ -1,0 +1,27 @@
+apiVersion: v2
+name: ctron-zincati-doppelgaenger
+description: Install Drogue Doppelgaenger
+keywords:
+  - IoT
+home: https://drogue.io
+icon: https://blog.drogue.io/favicon.svg
+
+maintainers:
+  - name: ctron
+    email: ctron@dentrassi.de
+    url: https://dentrassi.de
+
+type: application
+
+version: 0.1.0
+
+kubeVersion: ">= 1.23.0-0"
+
+dependencies:
+  - name: drogue-cloud-common
+    repository: "@drogue-iot"
+    version: "^0.7.0"
+  - name: drogue-cloud-twin
+    alias: drogueCloudTwin
+    repository: "@drogue-iot"
+    version: "^0.7.0"

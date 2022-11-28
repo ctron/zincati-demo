@@ -1,0 +1,15 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ctron-zincati-demo
+spec:
+  destination:
+    name: in-cluster
+    namespace: ctron-drogue
+    server: ''
+  source:
+    path: deployments/sso
+    repoURL: 'https://github.com/ctron/zincati-demo/'
+    targetRevision: HEAD
+  project: ctron-drogue
