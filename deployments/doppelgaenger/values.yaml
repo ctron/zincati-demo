@@ -1,8 +1,8 @@
 global:
   cluster: openshift
-  domain: -eclipsecon-2022.apps.sandbox.drogue.world
+  domain: -ctron-drogue.apps.sandbox.drogue.world
 
-  partOf: drogue-doppelgaenger
+  partOf: zincati-demo
 
   drogueCloud:
     jaeger:
@@ -12,7 +12,7 @@ global:
 
     keycloak:
       # enable keycloak deployment
-      enabled: true
+      enabled: false
       # enable secure deployment
       insecure: false
       postInstall:
@@ -26,9 +26,9 @@ drogueCloudTwin:
   defaults:
 
     images:
-      repository: quay.io/ctrontesting
-      pullPolicy: Always
-      tag: latest
+      repository: ghcr.io/drogue-iot
+      pullPolicy: IfNotPresent
+      tag: 0.1.0
 
     logging:
       debug: false
@@ -37,10 +37,6 @@ drogueCloudTwin:
     ingress: {}
 
   services:
-    sso:
-      ingress:
-        annotations:
-          route.openshift.io/termination: reencrypt
 
     injector:
       disabled: false
@@ -69,7 +65,7 @@ drogueCloudTwin:
       # username:
       # password:
       disableTls: false
-      mapToApplication: eclipsecon-hackathon
+      mapToApplication: ctron-zincati
 
   kafka:
     kafka:
