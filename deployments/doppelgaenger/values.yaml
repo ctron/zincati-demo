@@ -79,8 +79,6 @@ drogueCloudTwin:
           memory: 1Gi
 
   keycloak:
-    enabled: false
-
     adminPassword: # see values.secret.yaml
 
     postInstall:
@@ -88,12 +86,5 @@ drogueCloudTwin:
         password: # see values.secret.yaml
 
   postgres:
-    enabled: false
-
-    external:
-
-      databaseName: doppelgaenger
-      username: doppelgaenger
-      password: # see values.secret.yaml
-      host: postgres
+    password: # see values.secret.yaml
 
