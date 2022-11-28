@@ -20,8 +20,8 @@ kubeVersion: ">= 1.23.0-0"
 dependencies:
   - name: drogue-cloud-common
     repository: "@drogue-iot"
-    version: "^0.7.1"
+    version: "^0.7.2"
   - name: drogue-cloud-twin
     alias: drogueCloudTwin
     repository: "@drogue-iot"
-    version: "^0.7.1"
+    version: "^0.7.2"
