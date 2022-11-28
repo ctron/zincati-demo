@@ -90,4 +90,9 @@ drogueCloudTwin:
   postgres:
     enabled: false
 
-    password: # see values.secret.yaml
+    databaseName: doppelgaenger
+
+    external:
+      databaseName: doppelgaenger
+      username: doppelgaenger
+      password: # see values.secret.yaml
