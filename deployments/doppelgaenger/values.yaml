@@ -91,8 +91,5 @@ drogueCloudTwin:
     enabled: false
 
     databaseName: doppelgaenger
-
-    external:
-      databaseName: doppelgaenger
-      username: doppelgaenger
-      password: # see values.secret.yaml
+    username: doppelgaenger
+    password: # see values.secret.yaml
