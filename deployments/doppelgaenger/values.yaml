@@ -79,6 +79,8 @@ drogueCloudTwin:
           memory: 1Gi
 
   keycloak:
+    enabled: false
+
     adminPassword: # see values.secret.yaml
 
     postInstall:
@@ -86,4 +88,6 @@ drogueCloudTwin:
         password: # see values.secret.yaml
 
   postgres:
+    enabled: false
+
     password: # see values.secret.yaml
