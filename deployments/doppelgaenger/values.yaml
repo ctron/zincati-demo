@@ -1,6 +1,6 @@
 global:
   cluster: openshift
-  domain: -ctron-drogue.apps.wonderful.iot-playground.org
+  domain: -ctron-zincati.apps.wonderful.iot-playground.org
 
   partOf: zincati-demo
 
