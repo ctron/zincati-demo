@@ -6,13 +6,13 @@ global:
 
   drogueCloud:
     jaeger:
-      enabled: true
+      enabled: false
 
     useServiceCA: true
 
     keycloak:
       # enable keycloak deployment
-      enabled: false
+      enabled: true
       # enable secure deployment
       insecure: false
       postInstall:
