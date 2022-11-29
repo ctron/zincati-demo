@@ -21,7 +21,7 @@ spec:
 
       containers:
         - name: post-install
-          image: "docker.io/alpine/httpie:3.2.1"
+          image: "ghcr.io/ctron/batteries:1"
           imagePullPolicy: IfNotPresent
 
           env:
