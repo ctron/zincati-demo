@@ -64,5 +64,5 @@ spec:
               http $HTTP_OPTS POST ${API_URL}/api/v1alpha1/things metadata:='{"name": "/", "application": "default"}' || true
               http $HTTP_OPTS POST ${API_URL}/api/v1alpha1/things metadata:='{"name": "/devices", "application": "default"}' || true
 
-              http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/%2F/reportedStates '$children:={}'
+              http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/%2F/reportedStates '$children:={"/devices": {}}'
               http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/%2Fdevices/reportedStates '$parent:="/"'
