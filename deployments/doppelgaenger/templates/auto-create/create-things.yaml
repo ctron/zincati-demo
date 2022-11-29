@@ -1,0 +1,64 @@
+kind: Job
+apiVersion: batch/v1
+metadata:
+  name: post-install-keycloak
+  annotations:
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+    argocd.argoproj.io/sync-wave: "0"
+    helm.sh/hook-weight: "10"
+    helm.sh/hook: post-install,post-upgrade
+    helm.sh/hook-delete-policy: before-hook-creation
+spec:
+  backoffLimit: 1000
+  completions: 1
+  parallelism: 1
+  ttlSecondsAfterFinished: 600
+  template:
+    spec:
+
+      restartPolicy: OnFailure
+
+      containers:
+        - name: post-install
+          image: "docker.io/alpine/httpie:3.2.1"
+          imagePullPolicy: IfNotPresent
+
+          env:
+            - name: KEYCLOAK_URL
+              value: "https://sso-tls.{{ .Release.Namespace }}"
+
+            - name: CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-client-secret-services
+                  key: CLIENT_ID
+            - name: CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-client-secret-services
+                  key: CLIENT_SECRET
+
+            - name: KCADM_PATH
+              value: "/opt/keycloak/bin/kcadm.sh"
+
+            - name: CUSTOM_TRUSTSTORE
+              value: "/var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt"
+
+            - name: REALM
+              value: doppelgaenger
+
+            - name: API_URL
+              value: "http://doppelgaenger-backend.{{ . Release.Namespace }}.svc.cluster.local"
+
+          command:
+            - bash
+            - -exc
+            - |
+              HTTP_OPTS="-A bearer -a $(http --form POST ${KEYCLOAK_URL}/realms/${REALM}/protocol/openid-connect/token grant_type=client_credentials client_id=${CLIENT_ID} client_secret=${CLIENT_SECRET} | jq -r .access_token)"
+
+              http $HTTP_OPTS POST ${API_URL}/api/v1alpha1/things metadata:='{"name": "/", "application": "default"}' || true
+              http $HTTP_OPTS POST ${API_URL}/api/v1alpha1/things metadata:='{"name": "/devices", "application": "default"}' || true
+
+              http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/%2F/reportedStates '$children:={}'
+              http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/%2Fdevices/reportedStates '$parent:=/'
