@@ -49,7 +49,7 @@ spec:
               value: doppelgaenger
 
             - name: API_URL
-              value: "http://doppelgaenger-backend.{{ .Release.Namespace }}.svc.cluster.local:8080"
+              value: "https://doppelgaenger-backend.{{ .Release.Namespace }}.svc.cluster.local:443"
 
           command:
             - bash
@@ -57,7 +57,9 @@ spec:
             - |
               http --version
 
-              HTTP_OPTS="--ignore-stdin -A bearer -a $(http --ignore-stdin --form POST ${KEYCLOAK_URL}/realms/${REALM}/protocol/openid-connect/token grant_type=client_credentials client_id=${CLIENT_ID} client_secret=${CLIENT_SECRET} | jq -r .access_token)"
+              HTTP_ARGS="--ignore-stdin --verify ${CUSTOM_TRUSTSTORE}"
+
+              HTTP_OPTS="${HTTP_ARGS} -A bearer -a $(http ${HTTP_ARGS} --form POST ${KEYCLOAK_URL}/realms/${REALM}/protocol/openid-connect/token grant_type=client_credentials client_id=${CLIENT_ID} client_secret=${CLIENT_SECRET} | jq -r .access_token)"
 
               http $HTTP_OPTS POST ${API_URL}/api/v1alpha1/things metadata:='{"name": "/", "application": "default"}' || true
               http $HTTP_OPTS POST ${API_URL}/api/v1alpha1/things metadata:='{"name": "/devices", "application": "default"}' || true
