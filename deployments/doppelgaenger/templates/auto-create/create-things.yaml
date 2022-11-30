@@ -63,6 +63,19 @@ spec:
 
               http $HTTP_OPTS POST ${API_URL}/api/v1alpha1/things metadata:='{"name": "/", "application": "default"}' || true
               http $HTTP_OPTS POST ${API_URL}/api/v1alpha1/things metadata:='{"name": "/devices", "application": "default"}' || true
+              http $HTTP_OPTS POST ${API_URL}/api/v1alpha1/things metadata:='{"name": "test1", "application": "default"}' || true
+              http $HTTP_OPTS POST ${API_URL}/api/v1alpha1/things metadata:='{"name": "test1/zincati", "application": "default"}' || true
+
+              # we create the references manually for now
+
+              # back references
+
+              http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/%2Fdevices/reportedStates '$parent:="/"'
+              http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/test1/reportedStates '$parent:="/devices"'
+              http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/test1%2Fzincati/reportedStates '$parent:="test1"'
+
+              # forward references
 
               http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/%2F/reportedStates '$children:={"/devices": {}}'
-              http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/%2Fdevices/reportedStates '$parent:="/"'
+              http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/%2Fdevices/reportedStates '$children:={"test1": {}}'
+              http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/test1/reportedStates '$children:={"test1/zincati": {}}'
