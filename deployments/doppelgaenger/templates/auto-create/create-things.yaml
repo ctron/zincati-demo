@@ -57,7 +57,7 @@ spec:
             - |
               http --version
 
-              HTTP_ARGS="--ignore-stdin --verify ${CUSTOM_TRUSTSTORE}"
+              HTTP_ARGS="--check-status --ignore-stdin --verify ${CUSTOM_TRUSTSTORE}"
 
               HTTP_OPTS="${HTTP_ARGS} -A bearer -a $(http ${HTTP_ARGS} --form POST ${KEYCLOAK_URL}/realms/${REALM}/protocol/openid-connect/token grant_type=client_credentials client_id=${CLIENT_ID} client_secret=${CLIENT_SECRET} | jq -r .access_token)"
 
@@ -72,7 +72,7 @@ spec:
 
               http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/%2Fdevices/reportedStates '$parent:="/"'
               http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/test1/reportedStates '$parent:="/devices"'
-              http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/test1%2Fzincati/syntheticStates/%24parent 'javascript:="test1"'
+              http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/test1%2Fzincati/syntheticStates/%24parent 'javaScript:="test1"'
 
               # forward references
 
