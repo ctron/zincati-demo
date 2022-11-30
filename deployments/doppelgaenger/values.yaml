@@ -44,7 +44,7 @@ drogueCloudTwin:
         - name: INJECTOR__SOURCE__MQTT__HOST
           value: mqtt-integration.sandbox.drogue.cloud
         - name: INJECTOR__SOURCE__MQTT__PORT
-          value: "443"
+          value: "8883"
         - name: INJECTOR__SOURCE__MQTT__TOPIC
           value: "$share/mqtt-injector/app/ctron-zincati"
         - name: INJECTOR__METADATA_MAPPER__TYPE
@@ -65,7 +65,7 @@ drogueCloudTwin:
   configuration:
     commands:
       host: mqtt-integration.sandbox.drogue.cloud
-      port: 443
+      port: 8883
       clientId: command-sink
       # username:
       # password:
