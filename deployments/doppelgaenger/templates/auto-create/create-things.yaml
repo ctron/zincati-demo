@@ -72,7 +72,7 @@ spec:
 
               http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/%2Fdevices/reportedStates '$parent:="/"'
               http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/test1/reportedStates '$parent:="/devices"'
-              http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/test1%2Fzincati/syntheticStates/%24parent 'javaScript:="test1"'
+              http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/test1%2Fzincati/syntheticStates/%24parent javaScript:="'test1'"
 
               # forward references
 
