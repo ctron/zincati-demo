@@ -73,6 +73,21 @@ drogueCloudTwin:
       mapToApplication: ctron-zincati
 
   kafka:
+    entityOperator:
+      topicOperator:
+        resources:
+          limits:
+            memory: 256Mi
+          requests:
+            cpu: 250m
+            memory: 256Mi
+      userOperator:
+        resources:
+          limits:
+            memory: 256Mi
+          requests:
+            memory: 256Mi
+
     kafka:
       replicas: 1
       resources:
