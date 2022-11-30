@@ -63,7 +63,7 @@ spec:
 
               # cleanup old
 
-              http $HTTP_OPTS DELETE ${API_URL}/api/v1alpha1/things/test1%2Fzincati
+              http $HTTP_OPTS DELETE ${API_URL}/api/v1alpha1/things/test1%2Fzincati || true
 
               # create
 
