@@ -61,10 +61,17 @@ spec:
 
               HTTP_OPTS="${HTTP_ARGS} -A bearer -a $(http ${HTTP_ARGS} --form POST ${KEYCLOAK_URL}/realms/${REALM}/protocol/openid-connect/token grant_type=client_credentials client_id=${CLIENT_ID} client_secret=${CLIENT_SECRET} | jq -r .access_token)"
 
+              # cleanup old
+
+              http $HTTP_OPTS DELETE ${API_URL}/api/v1alpha1/things/test1%2Fzincati
+
+              # create
+
               http $HTTP_OPTS POST ${API_URL}/api/v1alpha1/things metadata:='{"name": "/", "application": "default"}' || true
               http $HTTP_OPTS POST ${API_URL}/api/v1alpha1/things metadata:='{"name": "/devices", "application": "default"}' || true
               http $HTTP_OPTS POST ${API_URL}/api/v1alpha1/things metadata:='{"name": "test1", "application": "default"}' || true
-              http $HTTP_OPTS POST ${API_URL}/api/v1alpha1/things metadata:='{"name": "test1/zincati", "application": "default"}' || true
+              http $HTTP_OPTS POST ${API_URL}/api/v1alpha1/things metadata:='{"name": "test1/updater", "application": "default"}' || true
+              http $HTTP_OPTS POST ${API_URL}/api/v1alpha1/things metadata:='{"name": "test1/ostree", "application": "default"}' || true
 
               # we create the references manually for now
 
@@ -72,10 +79,11 @@ spec:
 
               http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/%2Fdevices/reportedStates '$parent:="/"'
               http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/test1/reportedStates '$parent:="/devices"'
-              http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/test1%2Fzincati/syntheticStates/%24parent 'javaScript="test1"'
+              http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/test1%2Fupdater/syntheticStates/%24parent 'javaScript="test1"'
+              http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/test1%2Fostree/syntheticStates/%24parent 'javaScript="test1"'
 
               # forward references
 
               http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/%2F/reportedStates '$children:={"/devices": {}}'
               http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/%2Fdevices/reportedStates '$children:={"test1": {}}'
-              http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/test1/reportedStates '$children:={"test1/zincati": {}}'
+              http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/test1/reportedStates '$children:={"test1/updater": {}, "test1/ostree": {}}'
