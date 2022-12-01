@@ -98,8 +98,8 @@ spec:
               http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/test1/reportedStates '$children:={"test1/updater": {}, "test1/ostree": {}}'
 
               # create scripts
-              http $HTTP_OPTS DELETE ${API_URL}/api/v1alpha1/things/default/things/test1%2Fostree/syntheticStates/bootedVersion || true
-              http $HTTP_OPTS DELETE ${API_URL}/api/v1alpha1/things/default/things/test1%2Fostree/syntheticStates/stagedVersion || true
+              http $HTTP_OPTS DELETE ${API_URL}/api/v1alpha1/things/default/things/test1%2Fostree/syntheticStates/bootedDeployment || true
+              http $HTTP_OPTS DELETE ${API_URL}/api/v1alpha1/things/default/things/test1%2Fostree/syntheticStates/stagedDeployment || true
 
               http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/test1%2Fostree/syntheticStates/bootedVersion 'javaScript=@/etc/zincati-scripts/syn_booted.js'
               http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/test1%2Fostree/syntheticStates/stagedVersion 'javaScript=@/etc/zincati-scripts/syn_staged.js'
