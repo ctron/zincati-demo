@@ -98,5 +98,5 @@ spec:
               http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/test1/reportedStates '$children:={"test1/updater": {}, "test1/ostree": {}}'
 
               # create scripts
-              http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/test1%2Fostree/syntheticStates/stagedDeployment 'javaScript=@/etc/zincati-scripts/syn_booted.js'
+              http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/test1%2Fostree/syntheticStates/bootedDeployment 'javaScript=@/etc/zincati-scripts/syn_booted.js'
               http $HTTP_OPTS PUT ${API_URL}/api/v1alpha1/things/default/things/test1%2Fostree/syntheticStates/stagedDeployment 'javaScript=@/etc/zincati-scripts/syn_staged.js'
