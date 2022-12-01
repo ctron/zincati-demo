@@ -6,9 +6,8 @@ const deployment = find(deployment => deployment.booted);
 
 let result;
 
-if (deployment !== null) {
+if (deployment !== undefined) {
     result = {version: deployment.version, checksum: deployment.checksum};
 }
-
 
 result
